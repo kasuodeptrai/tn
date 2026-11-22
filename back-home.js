@@ -1,7 +1,7 @@
 // Nút quay về trang chủ
 const homeButton = document.createElement("a");
 
-homeButton.href = "/ten-repository/";
+homeButton.href = "/tn/";
 homeButton.innerHTML = "← Trang chủ";
 
 homeButton.style.cssText = `

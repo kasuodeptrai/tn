@@ -1,0 +1,1458 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ôn Thi Triết Học Mác - Lênin</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <!-- Tone.js for Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Tùy chỉnh tối ưu cho trải nghiệm trên iPhone 13 và thiết bị di động */
+        :root {
+            --sat: env(safe-area-inset-top);
+            --sab: env(safe-area-inset-bottom);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            overflow-x: hidden;
+            padding-top: var(--sat);
+            padding-bottom: var(--sab);
+        }
+
+        /* Hiệu ứng nút bấm xúc giác */
+        .btn-press {
+            transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-press:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        /* Hiệu ứng rung khi trả lời sai */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        /* Hiệu ứng nảy nhẹ khi trả lời đúng */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .animate-pop {
+            animation: pop 0.25s ease-out;
+        }
+
+        /* Hiệu ứng trượt lên cho hộp giải thích */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Tùy chỉnh thanh cuộn siêu mảnh */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-900">
+
+    <!-- Container chính tối ưu chiều rộng chuẩn di động (max-w-md ~ 448px, vừa vặn iPhone 13 390px) -->
+    <div id="app" class="w-full max-w-md mx-auto min-h-screen flex flex-col bg-white shadow-xl sm:my-4 sm:min-h-[844px] sm:rounded-[36px] sm:border sm:border-slate-200 overflow-hidden relative">
+
+        <!-- MÀN HÌNH CHỜ (START SCREEN) -->
+        <div id="start-screen" class="flex-1 flex flex-col justify-between p-6 bg-gradient-to-b from-indigo-50/80 via-white to-slate-50">
+            <div class="pt-6 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-indigo-600 text-white shadow-lg shadow-indigo-200 mb-5">
+                    <i class="fa-solid fa-brain text-3xl"></i>
+                </div>
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase mb-2">
+                    Ngân Hàng Đề Thi Tổng Hợp
+                </span>
+                <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight leading-snug">
+                    Triết Học Mác - Lênin
+                </h1>
+                <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                    Luyện tập trắc nghiệm thông minh với giải thích chi tiết từng đáp án. Tối ưu thao tác một tay.
+                </p>
+            </div>
+
+            <!-- Thống kê ngân hàng câu hỏi -->
+            <div class="my-6 space-y-3">
+                <div class="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 font-bold text-lg">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">20 Câu Ngẫu Nhiên / Màn</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Trộn đều từ bộ <strong>270 câu</strong> và bộ <strong>92 câu</strong> bổ sung.</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 font-bold text-lg">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Cơ Chế Điểm Thưởng &amp; Phạt</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Đúng <span class="text-emerald-600 font-bold">+1 điểm</span> (xanh), Sai <span class="text-rose-600 font-bold">-1 điểm</span> (đỏ).</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center shrink-0 font-bold text-lg">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Giải Thích Sâu Từng Câu</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Phân tích rõ lý do đúng/sai ngay sau khi chọn.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút bắt đầu -->
+            <div class="pb-4 space-y-3">
+                <button onclick="startGame()" class="btn-press w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-lg shadow-indigo-200 flex items-center justify-center gap-2.5">
+                    <span>Bắt Đầu Màn Chơi Mới</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <div class="flex items-center justify-center gap-2 text-xs text-slate-400">
+                    <button id="sound-toggle-start" onclick="toggleSound()" class="flex items-center gap-1.5 py-1.5 px-3 rounded-full hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-volume-high text-indigo-500" id="sound-icon-start"></i>
+                        <span id="sound-text-start">Âm thanh: Bật</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH CHƠI GAME (QUIZ SCREEN) -->
+        <div id="quiz-screen" class="hidden flex-1 flex flex-col h-full">
+            <!-- Header cố định trên cùng -->
+            <header class="px-5 pt-4 pb-3 bg-white border-b border-slate-100 sticky top-0 z-20">
+                <div class="flex items-center justify-between mb-2.5">
+                    <button onclick="confirmQuit()" class="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center btn-press" aria-label="Thoát">
+                        <i class="fa-solid fa-xmark text-base"></i>
+                    </button>
+
+                    <!-- Tiến độ câu hỏi -->
+                    <div class="flex flex-col items-center">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiến độ</span>
+                        <span class="text-sm font-extrabold text-slate-800">
+                            Câu <span id="current-q-num" class="text-indigo-600">1</span>/20
+                        </span>
+                    </div>
+
+                    <!-- Bảng điểm trực tiếp -->
+                    <div class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 text-white shadow-sm">
+                        <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                        <span id="score-display" class="text-sm font-extrabold tabular-nums">0</span>
+                    </div>
+                </div>
+
+                <!-- Thanh Progress Bar -->
+                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-300 ease-out" style="width: 5%"></div>
+                </div>
+            </header>
+
+            <!-- Nội dung câu hỏi & đáp án (Cuộn mượt mà) -->
+            <main id="quiz-scroll-area" class="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+                
+                <!-- Nhãn nguồn file gốc (stt + 270 hoặc stt + 92) -->
+                <div class="flex items-center justify-between">
+                    <span id="source-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                        <i class="fa-solid fa-file-lines text-[11px]"></i>
+                        <span id="source-text">Câu 1 + 270</span>
+                    </span>
+                    <button onclick="toggleSound()" class="text-slate-400 hover:text-indigo-600 p-1">
+                        <i class="fa-solid fa-volume-high text-sm" id="sound-icon-quiz"></i>
+                    </button>
+                </div>
+
+                <!-- Nội dung câu hỏi -->
+                <div class="bg-slate-50/90 p-4 rounded-2xl border border-slate-200/70">
+                    <h2 id="question-text" class="text-[17px] font-bold text-slate-900 leading-relaxed">
+                        Đang tải câu hỏi...
+                    </h2>
+                </div>
+
+                <!-- Danh sách 4 đáp án to, dễ bấm -->
+                <div id="options-container" class="space-y-3 pt-1">
+                    <!-- Các nút đáp án sẽ được render bằng JS -->
+                </div>
+
+                <!-- Hộp giải thích chi tiết (Ẩn mặc định, hiện ngay khi chọn đáp án) -->
+                <div id="explanation-box" class="hidden animate-slide-up rounded-2xl p-4 border-2 mt-4">
+                    <div class="flex items-start gap-3">
+                        <div id="exp-icon-wrap" class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 text-white font-bold">
+                            <i id="exp-icon" class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h4 id="exp-title" class="font-extrabold text-sm uppercase tracking-wide">Chính xác! (+1 điểm)</h4>
+                            </div>
+                            <p id="exp-text" class="text-sm leading-relaxed mt-1.5 text-slate-700">
+                                Nội dung giải thích sẽ hiển thị ở đây.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khoảng đệm dưới cùng để không bị che bởi nút Tiếp theo -->
+                <div class="h-6"></div>
+            </main>
+
+            <!-- Footer chứa nút Câu Tiếp Theo cố định ở dưới đáy (Vùng ngón cái iPhone 13) -->
+            <footer id="quiz-footer" class="p-4 bg-white border-t border-slate-100 sticky bottom-0 z-20">
+                <button id="next-btn" onclick="nextQuestion()" disabled="" class="btn-press w-full py-4 px-6 rounded-2xl bg-slate-200 text-slate-400 font-bold text-base flex items-center justify-center gap-2 transition-all">
+                    <span id="next-btn-text">Chọn một đáp án</span>
+                    <i id="next-btn-icon" class="fa-solid fa-hand-pointer"></i>
+                </button>
+            </footer>
+        </div>
+
+        <!-- MÀN HÌNH KẾT QUẢ (RESULT SCREEN) -->
+        <div id="result-screen" class="hidden flex-1 flex flex-col justify-between p-6 bg-gradient-to-b from-indigo-50/60 via-white to-slate-50 overflow-y-auto">
+            <div class="pt-4 text-center">
+                <div id="result-badge-icon" class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-amber-100 text-amber-500 shadow-md mb-4">
+                    <i class="fa-solid fa-trophy text-4xl"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900">Hoàn Thành Màn Chơi!</h2>
+                <p id="result-subtitle" class="text-sm text-slate-500 mt-1">Bạn đã hoàn thành 20 câu hỏi ngẫu nhiên.</p>
+
+                <!-- Điểm tổng kết -->
+                <div class="mt-6 p-5 rounded-3xl bg-slate-900 text-white shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-indigo-500/20 blur-xl"></div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-slate-400">Tổng Điểm Đạt Được</span>
+                    <div class="text-5xl font-black text-amber-400 my-2 tabular-nums" id="final-score">0</div>
+                    <p class="text-xs text-slate-300" id="score-evaluation">Điểm tối đa: 20 điểm</p>
+                </div>
+
+                <!-- Chi tiết đúng / sai -->
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
+                        <div class="text-2xl font-extrabold text-emerald-600" id="correct-count">0</div>
+                        <div class="text-xs font-semibold text-emerald-700 mt-0.5">Câu Đúng (+1đ)</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-rose-50 border border-rose-100 text-center">
+                        <div class="text-2xl font-extrabold text-rose-600" id="wrong-count">0</div>
+                        <div class="text-xs font-semibold text-rose-700 mt-0.5">Câu Sai (-1đ)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danh sách xem lại nhanh các câu đã làm -->
+            <div class="my-5">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">Tóm tắt 20 câu vừa làm</h3>
+                <div id="review-list" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    <!-- Render tóm tắt -->
+                </div>
+            </div>
+
+            <!-- Nút hành động -->
+            <div class="pb-4 space-y-2.5">
+                <button onclick="startGame()" class="btn-press w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-lg shadow-indigo-200 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Chơi Màn Mới (20 Câu Khác)</span>
+                </button>
+                <button onclick="goHome()" class="btn-press w-full py-3.5 px-6 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">
+                    Về Trang Chính
+                </button>
+            </div>
+        </div>
+
+        <!-- HỘP THOẠI XÁC NHẬN THOÁT (THAY THẾ CONFIRM) -->
+        <div id="quit-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-5">
+            <div class="bg-white rounded-3xl p-6 max-w-xs w-full shadow-2xl animate-pop">
+                <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-slate-900">Dừng màn chơi?</h3>
+                <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">
+                    Tiến độ và điểm số của lượt chơi hiện tại sẽ không được lưu lại.
+                </p>
+                <div class="grid grid-cols-2 gap-2.5 mt-5">
+                    <button onclick="closeQuitModal()" class="btn-press py-3 px-4 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">
+                        Chơi tiếp
+                    </button>
+                    <button onclick="goHome()" class="btn-press py-3 px-4 rounded-xl bg-rose-600 text-white font-bold text-sm">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /**
+         * CƠ SỞ DỮ LIỆU CÂU HỎI TỪ 2 FILE GỐC
+         * fileType: 270 (từ file Triet-270.pdf) hoặc 92 (từ file TRẮC NGHIỆM BỔ SUNG)
+         * originalIndex: Số thứ tự gốc trong file đó
+         * Quy tắc hiển thị nhãn: "stt + 270" hoặc "stt + 92"
+         */
+        const QUESTION_BANK = [
+            // ================= FILE 92 CÂU BỔ SUNG =================
+            {
+                fileType: 92,
+                originalIndex: 1,
+                question: "Tiền đề lý luận của sự ra đời chủ nghĩa Mác? Chọn câu trả lời đúng",
+                options: [
+                    "Chủ nghĩa duy vật triết học của Phoiơbắc, Kinh tế học Anh, Chủ nghĩa xã hội không tưởng Pháp",
+                    "Triết học biện chứng của Hêghen, Kinh tế chính trị cổ điển Anh, tư tưởng xã hội chủ nghĩa của Pháp",
+                    "Kinh tế học của Anh, Chủ nghĩa xã hội Pháp, Triết học cổ điển Đức",
+                    "Triết học cổ điển Đức, Kinh tế chính trị cổ điển Anh, Chủ nghĩa xã hội không tưởng Pháp"
+                ],
+                correct: 3,
+                explanation: "Ba nguồn gốc lý luận trực tiếp cấu thành chủ nghĩa Mác là: Triết học cổ điển Đức (Hêghen, Phoiơbắc), Kinh tế chính trị học cổ điển Anh (A.Smith, D.Ricardo) và Chủ nghĩa xã hội không tưởng Pháp (Xanh Ximông, Phuriê, Ôoen). Các phương án khác nêu thiếu chính xác tên gọi hoặc chỉ nêu một bộ phận."
+            },
+            {
+                fileType: 92,
+                originalIndex: 2,
+                question: "Hình thức nào dưới đây không phải là hình thức cơ bản của chủ nghĩa duy vật?",
+                options: [
+                    "Chủ nghĩa duy vật chất phác Cổ đại",
+                    "Chủ nghĩa duy vật tầm thường",
+                    "Chủ nghĩa duy vật siêu hình",
+                    "Chủ nghĩa duy vật biện chứng"
+                ],
+                correct: 1,
+                explanation: "Trong lịch sử triết học, chủ nghĩa duy vật phát triển qua 3 hình thức cơ bản: Chủ nghĩa duy vật chất phác (thời Cổ đại), Chủ nghĩa duy vật siêu hình (thế kỷ XVII-XVIII) và Chủ nghĩa duy vật biện chứng (do Mác và Ăngghen sáng lập). 'Chủ nghĩa duy vật tầm thường' là một biến tướng phiến diện chứ không phải hình thức cơ bản."
+            },
+            {
+                fileType: 92,
+                originalIndex: 3,
+                question: "Tiền đề khoa học tự nhiên của sự ra đời chủ nghĩa Mác? Chọn phương án sai",
+                options: [
+                    "Định luật bảo toàn và chuyển hoá năng lượng",
+                    "Học thuyết tiến hoá",
+                    "Học thuyết nguyên tử",
+                    "Học thuyết tế bào"
+                ],
+                correct: 2,
+                explanation: "Ba phát minh vĩ đại của khoa học tự nhiên nửa đầu thế kỷ XIX làm tiền đề cho triết học Mác là: Định luật bảo toàn và chuyển hóa năng lượng, Học thuyết tế bào và Học thuyết tiến hóa của Đác-uyn. Học thuyết nguyên tử có từ thời Cổ đại (Đêmôcrit) nên là phương án sai."
+            },
+            {
+                fileType: 92,
+                originalIndex: 4,
+                question: "Chức năng của triết học mácxít là gì? Chọn câu trả lời đúng",
+                options: [
+                    "Chức năng làm cầu nối cho các khoa học",
+                    "Chức năng làm sáng tỏ cấu trúc ngôn ngữ",
+                    "Chức năng khoa học của các khoa học",
+                    "Chức năng thế giới quan và phương pháp luận"
+                ],
+                correct: 3,
+                explanation: "Triết học Mác - Lênin có nhiều chức năng, trong đó hai chức năng cơ bản và bao trùm nhất là chức năng thế giới quan (duy vật biện chứng) và chức năng phương pháp luận chung nhất cho hoạt động nhận thức và thực tiễn."
+            },
+            {
+                fileType: 92,
+                originalIndex: 5,
+                question: "C.Mác đã kế thừa “hạt nhân hợp lý” trong triết học của ông để xây dựng phép biện chứng duy vật. Ông là ai?",
+                options: [
+                    "Phoiơbắc",
+                    "Platôn",
+                    "Hêghen",
+                    "Ăngghen"
+                ],
+                correct: 2,
+                explanation: "C.Mác đã gạt bỏ vỏ bọc duy tâm thần bí trong hệ thống triết học của Hêghen và kế thừa 'hạt nhân hợp lý' chính là phép biện chứng để cải tạo và xây dựng nên phép biện chứng duy vật. Còn với Phoiơbắc, Mác kế thừa chủ nghĩa duy vật."
+            },
+            {
+                fileType: 92,
+                originalIndex: 6,
+                question: "Bộ phận nào dưới đây không phải là một trong ba bộ phận cấu thành của Chủ nghĩa Mác - Lênin?",
+                options: [
+                    "Triết học Mác - Lênin",
+                    "Kinh tế chính trị Mác - Lênin",
+                    "Lịch sử đảng cộng sản Việt Nam",
+                    "Chủ nghĩa xã hội khoa học"
+                ],
+                correct: 2,
+                explanation: "Chủ nghĩa Mác - Lênin gồm 3 bộ phận lý luận cấu thành: Triết học Mác - Lênin, Kinh tế chính trị Mác - Lênin và Chủ nghĩa xã hội khoa học. Lịch sử Đảng Cộng sản Việt Nam là một môn khoa học lịch sử chuyên ngành tại Việt Nam."
+            },
+            {
+                fileType: 92,
+                originalIndex: 8,
+                question: "Triết học Mác ra đời là kết quả kế thừa trực tiếp:",
+                options: [
+                    "Thế giới quan duy vật của Hêghen và phép biện chứng của Phoiơbắc",
+                    "Thế giới quan duy vật của Phoiơbắc và phép biện chứng của Hêghen",
+                    "Thế giới quan duy vật của Hêghen và Phoiơbắc",
+                    "Thế giới quan duy tâm của Hêghen và Platon"
+                ],
+                correct: 1,
+                explanation: "Triết học Mác kế thừa trực tiếp hai thành tựu lớn nhất của triết học cổ điển Đức: Thế giới quan duy vật (vô thần) của L.Phoiơbắc và phép biện chứng của G.W.F.Hêghen. Phương án A bị đảo ngược vị trí tư tưởng của hai nhà triết học này."
+            },
+            {
+                fileType: 92,
+                originalIndex: 11,
+                question: "Khẳng định nào sau đây là sai?",
+                options: [
+                    "Triết học Mác là sự lắp ghép phép biện chứng của Hêghen và chủ nghĩa duy vật của Phoiơbắc",
+                    "Triết học Mác có sự thống nhất giữa phương pháp biện chứng và thế giới quan duy vật",
+                    "Triết học Mác kế thừa và cải tạo phép biện chứng của Hêghen trên cơ sở chủ nghĩa duy vật",
+                    "Triết học Mác ra đời là một bước ngoặt vĩ đại trong lịch sử tư tưởng của nhân loại"
+                ],
+                correct: 0,
+                explanation: "Khẳng định A sai vì triết học Mác KHÔNG phải là sự 'lắp ghép cơ học' giản đơn, mà là sự kế thừa có phê phán, cải tạo và phát triển lên một trình độ mới về chất, tạo ra sự thống nhất hữu cơ giữa chủ nghĩa duy vật và phép biện chứng."
+            },
+            {
+                fileType: 92,
+                originalIndex: 12,
+                question: "Triết học ra đời từ nguồn gốc cơ bản nào?",
+                options: [
+                    "Nguồn gốc ý thức và nguồn gốc tư tưởng",
+                    "Nguồn gốc tư tưởng và nguồn gốc triết lý",
+                    "Nguồn gốc nhận thức và nguồn gốc xã hội",
+                    "Nguồn gốc xã hội và nguồn gốc thế giới quan"
+                ],
+                correct: 2,
+                explanation: "Triết học chỉ ra đời khi hội đủ 2 nguồn gốc: Nguồn gốc nhận thức (tư duy con người đạt trình độ khái quát hóa, trừu tượng hóa cao) và Nguồn gốc xã hội (sự phân công lao động xã hội tách lao động trí óc khỏi lao động chân tay và xã hội phân chia giai cấp)."
+            },
+            {
+                fileType: 92,
+                originalIndex: 25,
+                question: "Hêraclit cho rằng thực thể đầu tiên của thế giới là gì?",
+                options: [
+                    "Nước",
+                    "Lửa",
+                    "Không khí",
+                    "Nguyên tử"
+                ],
+                correct: 1,
+                explanation: "Nhà triết học duy vật tự phát Hy Lạp cổ đại Hêraclit coi 'Lửa' là bản nguyên, thực thể đầu tiên sinh ra vạn vật. (Talet chọn Nước, Anaximen chọn Không khí, Đêmôcrit chọn Nguyên tử)."
+            },
+            {
+                fileType: 92,
+                originalIndex: 31,
+                question: "Điền vào chỗ trống từ còn thiếu để hoàn thiện định nghĩa vật chất của V.I.Lênin: “Vật chất là một phạm trù triết học, dùng để chỉ……., được đem lại cho con người trong cảm giác, được cảm giác của chúng ta chép lại, chụp lại, phản ánh lại và tồn tại không lệ thuộc vào cảm giác”.",
+                options: [
+                    "Tồn tại khách quan",
+                    "Quy luật khách quan",
+                    "Mâu thuẫn khách quan",
+                    "Thực tại khách quan"
+                ],
+                correct: 3,
+                explanation: "Theo định nghĩa kinh điển của V.I.Lênin trong tác phẩm 'Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán', từ chính xác cần điền là 'Thực tại khách quan' — chỉ tất cả những gì tồn tại bên ngoài, độc lập với ý thức con người."
+            },
+            {
+                fileType: 92,
+                originalIndex: 33,
+                question: "Talet cho rằng cơ sở vật chất đầu tiên của thế giới là gì?",
+                options: [
+                    "Apeirôn",
+                    "Nguyên tử",
+                    "Nước",
+                    "Lửa"
+                ],
+                correct: 2,
+                explanation: "Talet (Thales) — nhà triết học đầu tiên của Hy Lạp cổ đại — quan niệm 'Nước' là khởi nguyên vật chất của toàn bộ thế giới vì vạn vật đều cần nước để sinh trưởng."
+            },
+            {
+                fileType: 92,
+                originalIndex: 35,
+                question: "Chọn câu trả lời sai. Theo chủ nghĩa duy vật biện chứng, bản chất của quá trình nhận thức là:",
+                options: [
+                    "Sự phản ánh thế giới khách quan một cách năng động của ý thức chủ thể",
+                    "Là quá trình đi từ trực quan sinh động đến tư duy trừu tượng",
+                    "Những kinh nghiệm và lí luận được tổng kết từ mọi hoạt động thực tiễn của con người",
+                    "Là quá trình đi từ nhận thức lý tính đến nhận thức cảm tính"
+                ],
+                correct: 3,
+                explanation: "Phương án D sai vì quá trình nhận thức biện chứng phải đi từ 'nhận thức cảm tính (trực quan sinh động) đến nhận thức lý tính (tư duy trừu tượng)', sau đó quay trở về thực tiễn để kiểm nghiệm, chứ không đi ngược từ lý tính về cảm tính."
+            },
+            {
+                fileType: 92,
+                originalIndex: 36,
+                question: "Phép biện chứng duy vật bao gồm những nguyên lý cơ bản nào?",
+                options: [
+                    "Nguyên lý về mối liên hệ phổ biến",
+                    "Nguyên lý về tính hệ thống, cấu trúc",
+                    "Nguyên lý về mối liên hệ phổ biến và nguyên lý về sự phát triển",
+                    "Nguyên lý về sự vận động và nguyên lý về sự phát triển"
+                ],
+                correct: 2,
+                explanation: "Phép biện chứng duy vật được xây dựng trên nền tảng của 2 nguyên lý cơ bản nhất: Nguyên lý về mối liên hệ phổ biến và Nguyên lý về sự phát triển."
+            },
+            {
+                fileType: 92,
+                originalIndex: 43,
+                question: "Phép biện chứng duy vật có mấy cặp phạm trù cơ bản?",
+                options: [
+                    "3 cặp",
+                    "4 cặp",
+                    "5 cặp",
+                    "6 cặp"
+                ],
+                correct: 3,
+                explanation: "Phép biện chứng duy vật có 6 cặp phạm trù cơ bản: (1) Cái riêng và cái chung, (2) Nguyên nhân và kết quả, (3) Tất nhiên và ngẫu nhiên, (4) Nội dung và hình thức, (5) Bản chất và hiện tượng, (6) Khả năng và hiện thực."
+            },
+            {
+                fileType: 92,
+                originalIndex: 47,
+                question: "Yếu tố nào được xem là yếu tố động nhất, cách mạng nhất trong lực lượng sản xuất?",
+                options: [
+                    "Người lao động",
+                    "Đối tượng lao động",
+                    "Công cụ lao động",
+                    "Phương tiện lao động"
+                ],
+                correct: 2,
+                explanation: "Công cụ lao động là yếu tố động nhất, cách mạng nhất trong lực lượng sản xuất vì con người luôn tìm cách cải tiến công cụ để tăng năng suất, kéo theo sự biến đổi của toàn bộ phương thức sản xuất. (Lưu ý: Người lao động là nhân tố hàng đầu giữ vai trò quyết định)."
+            },
+            {
+                fileType: 92,
+                originalIndex: 48,
+                question: "Nhân tố hàng đầu giữ vai trò quyết định trong lực lượng sản xuất là?",
+                options: [
+                    "Người lao động",
+                    "Tư liệu sản xuất",
+                    "Tư liệu lao động",
+                    "Đối tượng lao động"
+                ],
+                correct: 0,
+                explanation: "Người lao động với tri thức, kinh nghiệm, kỹ năng và sức khỏe là chủ thể sáng tạo và sử dụng công cụ lao động, do đó giữ vai trò quyết định hàng đầu trong lực lượng sản xuất."
+            },
+            {
+                fileType: 92,
+                originalIndex: 49,
+                question: "Quan hệ nào sau đây có vai trò quyết định các quan hệ còn lại trong quan hệ sản xuất?",
+                options: [
+                    "Quan hệ sở hữu về tư liệu sản xuất",
+                    "Quan hệ về tổ chức, quản lý sản xuất",
+                    "Quan hệ về phân phối sản phẩm lao động",
+                    "Quan hệ giữa con người và tự nhiên trong quá trình sản xuất"
+                ],
+                correct: 0,
+                explanation: "Trong 3 mặt của quan hệ sản xuất (sở hữu, tổ chức quản lý, phân phối), quan hệ sở hữu đối với tư liệu sản xuất giữ vai trò quyết định nhất vì ai nắm tư liệu sản xuất sẽ nắm quyền tổ chức quản lý và phân phối sản phẩm."
+            },
+            {
+                fileType: 92,
+                originalIndex: 52,
+                question: "Bộ phận có quyền lực mạnh nhất trong kiến trúc thượng tầng của xã hội có đối kháng giai cấp là bộ phận nào sau đây?",
+                options: [
+                    "Chính trị",
+                    "Pháp luật",
+                    "Nhà nước",
+                    "Đạo đức"
+                ],
+                correct: 2,
+                explanation: "Nhà nước là công cụ quyền lực chính trị đặc biệt của giai cấp thống trị, có bộ máy cưỡng chế chuyên nghiệp (quân đội, cảnh sát, tòa án, nhà tù) nên có sức mạnh và tác động trực tiếp mạnh mẽ nhất trong kiến trúc thượng tầng."
+            },
+            {
+                fileType: 92,
+                originalIndex: 54,
+                question: "Định nghĩa giai cấp của Lênin được nêu trong tác phẩm nào sau đây?",
+                options: [
+                    "Nhà nước và cách mạng",
+                    "Tuyên ngôn Đảng Cộng sản",
+                    "Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán",
+                    "Sáng kiến vĩ đại"
+                ],
+                correct: 3,
+                explanation: "Định nghĩa kinh điển về giai cấp của V.I.Lênin được trình bày trong tác phẩm 'Sáng kiến vĩ đại' viết năm 1919."
+            },
+            {
+                fileType: 92,
+                originalIndex: 57,
+                question: "Nguyên nhân trực tiếp dẫn đến sự ra đời của giai cấp là gì?",
+                options: [
+                    "Do mâu thuẫn giữa lực lượng sản xuất và quan hệ sản xuất",
+                    "Do xuất hiện chế độ tư hữu về tư liệu sản xuất",
+                    "Do chiến tranh",
+                    "Do tranh giành quyền lực"
+                ],
+                correct: 1,
+                explanation: "Nguyên nhân sâu xa của sự phân chia giai cấp là sự phát triển của lực lượng sản xuất tạo ra của cải dư thừa; còn nguyên nhân trực tiếp dẫn đến sự ra đời của giai cấp là sự xuất hiện chế độ tư hữu về tư liệu sản xuất."
+            },
+            {
+                fileType: 92,
+                originalIndex: 62,
+                question: "Sắp xếp theo thứ tự từ thấp đến cao các hình thức cộng đồng người sau:",
+                options: [
+                    "Thị tộc, bộ lạc, bộ tộc, dân tộc",
+                    "Thị tộc, bộ tộc, bộ lạc, dân tộc",
+                    "Bộ tộc, bộ lạc, dân tộc, thị tộc",
+                    "Bộ tộc, thị tộc, dân tộc, bộ lạc"
+                ],
+                correct: 0,
+                explanation: "Sự phát triển của các hình thức cộng đồng người trong lịch sử đi từ thấp đến cao theo trình tự: Thị tộc -> Bộ lạc (liên minh các thị tộc) -> Bộ tộc (khi xã hội có giai cấp) -> Dân tộc (hình thức cao nhất, phổ biến hiện nay)."
+            },
+            {
+                fileType: 92,
+                originalIndex: 65,
+                question: "Trong các phương diện sau đây của sự sản xuất xã hội, phương diện nào quyết định toàn bộ sự vận động, phát triển của đời sống xã hội?",
+                options: [
+                    "Sản xuất vật chất",
+                    "Sản xuất tinh thần",
+                    "Sản xuất ra bản thân con người",
+                    "Sản xuất ra giá trị thặng dư"
+                ],
+                correct: 0,
+                explanation: "Sản xuất xã hội gồm 3 phương diện (sản xuất vật chất, sản xuất tinh thần, sản xuất ra bản thân con người), trong đó sản xuất vật chất là cơ sở của sự tồn tại và phát triển xã hội, quyết định toàn bộ đời sống xã hội."
+            },
+            {
+                fileType: 92,
+                originalIndex: 75,
+                question: "Theo quan điểm mácxít, nhà nước nào khi đã hoàn thành chức năng của nó thì lúc đó nhà nước sẽ “tự tiêu vong”?",
+                options: [
+                    "Nhà nước chủ nô",
+                    "Nhà nước phong kiến",
+                    "Nhà nước tư sản",
+                    "Nhà nước vô sản"
+                ],
+                correct: 3,
+                explanation: "Nhà nước vô sản là nhà nước 'nửa nhà nước', kiểu nhà nước cuối cùng trong lịch sử. Khi xã hội cộng sản chủ nghĩa phát triển cao, không còn giai cấp và đối kháng giai cấp, nhà nước vô sản hoàn thành sứ mệnh lịch sử và sẽ tự tiêu vong."
+            },
+            {
+                fileType: 92,
+                originalIndex: 76,
+                question: "Phương thức tiến hành của một nhóm người với mục đích giành chính quyền song không làm thay đổi căn bản chế độ xã hội được gọi là?",
+                options: [
+                    "Cách mạng xã hội",
+                    "Tiến hóa xã hội",
+                    "Cải cách xã hội",
+                    "Đảo chính"
+                ],
+                correct: 3,
+                explanation: "Đảo chính là thủ đoạn giành chính quyền của một cá nhân hoặc một nhóm người nhằm lật đổ chính quyền đương thời nhưng không làm thay đổi bản chất chế độ kinh tế - xã hội. Cách mạng xã hội mới làm thay đổi căn bản chế độ xã hội."
+            },
+            {
+                fileType: 92,
+                originalIndex: 81,
+                question: "C.Mác đã định nghĩa bản chất con người như thế nào?",
+                options: [
+                    "Trong tính hiện thực, bản chất con người là tổng hoà các mối quan hệ giống loài",
+                    "Trong tính hiện thực của nó, bản chất con người là tổng hoà tất cả các mối quan hệ gia đình, nhà nước và pháp luật",
+                    "Bản chất con người không phải là cái trừu tượng cố hữu của cá nhân riêng biệt; trong tính hiện thực của nó, bản chất con người là tổng hoà những mối quan hệ xã hội",
+                    "Con người là động vật xã hội có tính chất đặc biệt"
+                ],
+                correct: 2,
+                explanation: "Trong 'Luận cương về Phoiơbắc', C.Mác khẳng định: 'Bản chất con người không phải là một cái trừu tượng cố hữu của cá nhân riêng biệt. Trong tính hiện thực của nó, bản chất con người là tổng hòa những quan hệ xã hội'."
+            },
+            {
+                fileType: 92,
+                originalIndex: 83,
+                question: "Hãy điền từ còn thiếu vào chỗ trống trong luận điểm sau: “Sự phát triển tự do của mỗi người là điều kiện cho sự phát triển tự do của…….”",
+                options: [
+                    "Cá nhân kiệt xuất",
+                    "Quần chúng nhân dân",
+                    "Tất cả mọi người",
+                    "Thế giới vật chất"
+                ],
+                correct: 2,
+                explanation: "Trong 'Tuyên ngôn của Đảng Cộng sản', C.Mác và Ph.Ăngghen viết về xã hội cộng sản tương lai: 'Sự phát triển tự do của mỗi người là điều kiện cho sự phát triển tự do của tất cả mọi người'."
+            },
+            {
+                fileType: 92,
+                originalIndex: 92,
+                question: "Theo quan điểm của chủ nghĩa Mác - Lênin, cách mạng là sự nghiệp của ai?",
+                options: [
+                    "Giai cấp nông dân",
+                    "Giai cấp công nhân",
+                    "Giai cấp tư sản",
+                    "Quần chúng nhân dân"
+                ],
+                correct: 3,
+                explanation: "Triết học Mác - Lênin khẳng định quần chúng nhân dân là chủ thể sáng tạo chân chính ra lịch sử, là lực lượng quyết định thắng lợi của mọi cuộc cách mạng xã hội."
+            },
+
+            // ================= FILE 270 CÂU ÔN TẬP =================
+            {
+                fileType: 270,
+                originalIndex: 1,
+                question: "Bộ phận nào trong chủ nghĩa Mác - Lênin có chức năng làm sáng tỏ bản chất những quy luật chung nhất của mọi sự vận động, phát triển của thế giới?",
+                options: [
+                    "Triết học Mác - Lênin",
+                    "Kinh tế chính trị Mác - Lênin",
+                    "Chủ nghĩa xã hội khoa học",
+                    "Không có bộ phận nào giữ chức năng đó vì chủ nghĩa Mác - Lênin thuần túy là khoa học xã hội"
+                ],
+                correct: 0,
+                explanation: "Triết học Mác - Lênin nghiên cứu những quy luật vận động, phát triển chung nhất của cả tự nhiên, xã hội và tư duy. Kinh tế chính trị nghiên cứu quy luật kinh tế, còn CNXHKH nghiên cứu quy luật chính trị - xã hội của quá trình chuyển biến lên CNXH."
+            },
+            {
+                fileType: 270,
+                originalIndex: 2,
+                question: "Có mấy thời kỳ chủ yếu trong sự hình thành và phát triển của triết học Mác? (giai đoạn Mác - Ăngghen)",
+                options: [
+                    "2 thời kỳ",
+                    "3 thời kỳ",
+                    "4 thời kỳ",
+                    "5 thời kỳ"
+                ],
+                correct: 1,
+                explanation: "Sự hình thành và phát triển triết học Mác (giai đoạn Mác - Ăngghen) chia làm 3 thời kỳ chủ yếu: (1) 1841-1844: Hình thành tư tưởng triết học; (2) 1844-1848: Đề xuất những nguyên lý triết học DVBC và DVLS; (3) 1848-1895: Bổ sung và phát triển toàn diện."
+            },
+            {
+                fileType: 270,
+                originalIndex: 3,
+                question: "Tiền đề nào sau đây không phải là tiền đề khách quan của sự ra đời triết học Mác?",
+                options: [
+                    "Điều kiện kinh tế - xã hội",
+                    "Tiền đề lý luận",
+                    "Tiền đề khoa học tự nhiên",
+                    "Tài năng, phẩm chất của C.Mác và Ph.Ăngghen"
+                ],
+                correct: 3,
+                explanation: "Điều kiện kinh tế - xã hội, tiền đề lý luận và tiền đề khoa học tự nhiên là những điều kiện khách quan. Tài năng, phẩm chất thiên tài và hoạt động thực tiễn của C.Mác và Ph.Ăngghen thuộc về nhân tố chủ quan."
+            },
+            {
+                fileType: 270,
+                originalIndex: 7,
+                question: "Những phát minh nào của khoa học tự nhiên nửa đầu thế kỷ XIX tác động đến sự hình thành triết học Mác? Chọn phương án sai",
+                options: [
+                    "Định luật bảo toàn và chuyển hóa năng lượng",
+                    "Thuyết tiến hóa",
+                    "Học thuyết tế bào",
+                    "Thuyết tương đối rộng và thuyết tương đối hẹp"
+                ],
+                correct: 3,
+                explanation: "Thuyết tương đối hẹp (1905) và thuyết tương đối rộng (1915) do Albert Einstein công bố vào đầu thế kỷ XX (sau khi Mác và Ăngghen đã qua đời), không phải phát minh nửa đầu thế kỷ XIX."
+            },
+            {
+                fileType: 270,
+                originalIndex: 10,
+                question: "Phản ánh nào mang tính thụ động, chưa có định hướng lựa chọn của vật chất tác động?",
+                options: [
+                    "Phản ánh lý - hóa",
+                    "Phản ánh sinh học",
+                    "Phản ánh tâm lý",
+                    "Phản ánh năng động, sáng tạo"
+                ],
+                correct: 0,
+                explanation: "Phản ánh lý - hóa là hình thức phản ánh đơn giản nhất, đặc trưng cho giới tự nhiên vô sinh, mang tính thụ động, chưa có sự định hướng lựa chọn như phản ánh sinh học hay tâm lý."
+            },
+            {
+                fileType: 270,
+                originalIndex: 14,
+                question: "Ý nghĩa phương pháp luận rút ra từ mối quan hệ biện chứng giữa vật chất và ý thức? Chọn đáp án đúng nhất:",
+                options: [
+                    "Trong nhận thức và hoạt động thực tiễn phải xuất phát từ thực tế khách quan",
+                    "Trong nhận thức và hoạt động thực tiễn phải phát huy tính năng động chủ quan của con người",
+                    "Trong nhận thức và hoạt động thực tiễn phải xuất phát từ thực tế khách quan, tôn trọng khách quan; đồng thời phải phát huy tính năng động chủ quan của con người",
+                    "Trong nhận thức và hoạt động thực tiễn phải tùy vào mỗi tình huống cụ thể mà nhận thức và hành động"
+                ],
+                correct: 2,
+                explanation: "Vì vật chất quyết định ý thức nhưng ý thức có tính độc lập tương đối và tác động trở lại vật chất, nên phương pháp luận rút ra phải kết hợp cả hai mặt: tôn trọng tính khách quan đồng thời phát huy tính năng động chủ quan (chống chủ quan duy ý chí và chống thụ động ỷ lại)."
+            },
+            {
+                fileType: 270,
+                originalIndex: 18,
+                question: "Việc không dám thực hiện những bước nhảy cần thiết khi tích luỹ về lượng đã đạt đến giới hạn của độ là biểu hiện của xu hướng nào?",
+                options: [
+                    "Hữu khuynh",
+                    "Vừa tả khuynh vừa hữu khuynh",
+                    "Tả khuynh",
+                    "Quan điểm trung dung"
+                ],
+                correct: 0,
+                explanation: "Khi lượng đã tích lũy đủ đến điểm nút mà do dự, bảo thủ, không dám thực hiện bước nhảy để thay đổi về chất thì gọi là bệnh 'hữu khuynh'. Ngược lại, nóng vội đốt cháy giai đoạn khi chưa đủ lượng là bệnh 'tả khuynh'."
+            },
+            {
+                fileType: 270,
+                originalIndex: 19,
+                question: "Việc nôn nóng vội vàng muốn đốt cháy giai đoạn, không tôn trọng quá trình tích luỹ về lượng ở mức độ cần thiết cho sự biến đổi về chất là biểu hiện của xu hướng nào?",
+                options: [
+                    "Tả khuynh",
+                    "Hữu khuynh",
+                    "Vừa tả khuynh vừa hữu khuynh",
+                    "Quan điểm trung dung"
+                ],
+                correct: 0,
+                explanation: "Chủ quan, nóng vội, muốn thực hiện bước nhảy khi chưa tích lũy đủ về lượng (đốt cháy giai đoạn) là biểu hiện của khuynh hướng 'tả khuynh' trong nhận thức và hành động."
+            },
+            {
+                fileType: 270,
+                originalIndex: 21,
+                question: "Quy luật nào sau đây được xem là “hạt nhân” của phép biện chứng duy vật?",
+                options: [
+                    "Quy luật thống nhất và đấu tranh của các mặt đối lập",
+                    "Quy luật từ những thay đổi về lượng dẫn đến những thay đổi về chất và ngược lại",
+                    "Quy luật phủ định của phủ định",
+                    "Quy luật về sự phù hợp giữa lực lượng sản xuất và quan hệ sản xuất"
+                ],
+                correct: 0,
+                explanation: "Quy luật thống nhất và đấu tranh của các mặt đối lập (quy luật mâu thuẫn) được V.I.Lênin gọi là 'hạt nhân' của phép biện chứng duy vật vì nó chỉ ra nguồn gốc, động lực bên trong của mọi sự vận động và phát triển."
+            },
+            {
+                fileType: 270,
+                originalIndex: 27,
+                question: "Anaximander cho rằng cơ sở đầu tiên của mọi vật trong vũ trụ là gì?",
+                options: [
+                    "Lửa",
+                    "Nước",
+                    "Apeirôn",
+                    "Nguyên tử"
+                ],
+                correct: 2,
+                explanation: "Anaximander (học trò của Talet) cho rằng cơ sở đầu tiên của vũ trụ không phải một chất cụ thể như nước hay lửa mà là 'Apeirôn' — một dạng vật chất đơn nhất, vô định, vô hạn và tồn tại vĩnh viễn."
+            },
+            {
+                fileType: 270,
+                originalIndex: 30,
+                question: "Vấn đề cơ bản của triết học là gì?",
+                options: [
+                    "Vấn đề mối quan hệ giữa thần và người",
+                    "Vấn đề mối quan hệ giữa vật chất và ý thức",
+                    "Vấn đề thế giới quan của con người",
+                    "Vấn đề về giới tự nhiên"
+                ],
+                correct: 1,
+                explanation: "Theo Ph.Ăngghen: 'Vấn đề cơ bản lớn của mọi triết học, đặc biệt là của triết học hiện đại, là vấn đề quan hệ giữa tư duy với tồn tại' (hay giữa ý thức và vật chất)."
+            },
+            {
+                fileType: 270,
+                originalIndex: 31,
+                question: "Nội dung mặt thứ hai trong vấn đề cơ bản của triết học là gì?",
+                options: [
+                    "Vật chất và ý thức cái nào có trước, cái nào có sau?",
+                    "Con người và thế giới sẽ đi về đâu?",
+                    "Bản chất của thế giới là vật chất hay ý thức?",
+                    "Con người có khả năng nhận thức được thế giới hay không?"
+                ],
+                correct: 3,
+                explanation: "Vấn đề cơ bản của triết học có 2 mặt: Mặt thứ nhất (bản thể luận) hỏi giữa vật chất và ý thức cái nào có trước, cái nào quyết định; Mặt thứ hai (nhận thức luận) hỏi con người có khả năng nhận thức được thế giới hay không."
+            },
+            {
+                fileType: 270,
+                originalIndex: 33,
+                question: "Hệ thống triết học nào quan niệm “sự vật là phức hợp của các cảm giác”?",
+                options: [
+                    "Chủ nghĩa duy vật siêu hình",
+                    "Chủ nghĩa duy vật biện chứng",
+                    "Chủ nghĩa duy tâm chủ quan",
+                    "Chủ nghĩa duy tâm khách quan"
+                ],
+                correct: 2,
+                explanation: "Đây là luận điểm nổi tiếng của nhà triết học duy tâm chủ quan người Anh G.Béccoli (George Berkeley). Ông cho rằng sự vật tồn tại chẳng qua là do cảm giác của con người cảm nhận mà có."
+            },
+            {
+                fileType: 270,
+                originalIndex: 46,
+                question: "Trường phái triết học nào cho vận động là tuyệt đối, đứng im là tương đối?",
+                options: [
+                    "Chủ nghĩa duy vật tự phát",
+                    "Chủ nghĩa duy vật biện chứng",
+                    "Chủ nghĩa duy tâm khách quan",
+                    "Chủ nghĩa duy vật siêu hình"
+                ],
+                correct: 1,
+                explanation: "Chủ nghĩa duy vật biện chứng khẳng định vận động là phương thức tồn tại của vật chất nên vận động là tuyệt đối, vĩnh viễn; còn đứng im chỉ là trạng thái vận động trong thăng bằng, chỉ diễn ra trong một quan hệ nhất định và tạm thời nên đứng im là tương đối."
+            },
+            {
+                fileType: 270,
+                originalIndex: 55,
+                question: "Nguồn gốc xã hội của ý thức là:",
+                options: [
+                    "Các quy luật trong thế giới vật chất",
+                    "Lao động và ngôn ngữ",
+                    "Bộ óc người và thế giới khách quan",
+                    "Niềm tin tôn giáo"
+                ],
+                correct: 1,
+                explanation: "Ý thức có 2 nguồn gốc: Nguồn gốc tự nhiên (bộ óc người và thế giới khách quan tác động lên bộ óc) và Nguồn gốc xã hội (lao động và ngôn ngữ — yếu tố quyết định trực tiếp sự ra đời của ý thức)."
+            },
+            {
+                fileType: 270,
+                originalIndex: 79,
+                question: "Quy luật chuyển hoá từ sự thay đổi về lượng dẫn đến sự thay đổi về chất và ngược lại trong chủ nghĩa Mác - Lênin chỉ ra điều gì?",
+                options: [
+                    "Nguồn gốc, động lực của sự vận động và phát triển của thế giới hiện thực khách quan",
+                    "Khuynh hướng của sự vận động và phát triển của thế giới hiện thực khách quan",
+                    "Cách thức chung nhất của sự vận động, phát triển của thế giới hiện thực khách quan",
+                    "Tính qui định khách quan vốn có của sự vật"
+                ],
+                correct: 2,
+                explanation: "Trong 3 quy luật cơ bản: Quy luật Lượng - Chất chỉ ra CÁCH THỨC của sự phát triển; Quy luật Mâu thuẫn chỉ ra NGUỒN GỐC, ĐỘNG LỰC; Quy luật Phủ định của phủ định chỉ ra KHUYNH HƯỚNG của sự phát triển."
+            },
+            {
+                fileType: 270,
+                originalIndex: 80,
+                question: "Trong nội dung qui luật từ những thay đổi về lượng dẫn đến những thay đổi về chất và ngược lại, phạm trù nào dùng để chỉ khoảng giới hạn tồn tại của sự vật, hiện tượng mà trong đó, sự thay đổi về lượng chưa dẫn đến sự thay đổi chất?",
+                options: [
+                    "Điểm nút",
+                    "Bước nhảy",
+                    "Quá độ",
+                    "Độ"
+                ],
+                correct: 3,
+                explanation: "'Độ' là khoảng giới hạn mà ở đó sự thay đổi về lượng chưa làm thay đổi căn bản về chất của sự vật (ví dụ: nước ở áp suất thường từ 0°C đến 100°C vẫn ở thể lỏng). Giới hạn cuối của độ gọi là 'Điểm nút'."
+            },
+            {
+                fileType: 270,
+                originalIndex: 86,
+                question: "Tính kế thừa biện chứng theo quan điểm triết học Mác - Lênin là:",
+                options: [
+                    "Những thuộc tính của cái cũ được giữ lại nguyên vẹn trong cái mới",
+                    "Những thuộc tính của cái cũ đã mất đi hoàn toàn, không xuất hiện trong cái mới",
+                    "Đối tượng giữ lại toàn bộ những gì bản thân nó đã có ở giai đoạn phát triển trước",
+                    "Giữ lại có chọn lọc và cải tạo yếu tố thích hợp, loại bỏ những yếu tố không còn thích hợp của cái cũ để chuyển sang cái mới"
+                ],
+                correct: 3,
+                explanation: "Kế thừa biện chứng khác với kế thừa siêu hình (giữ nguyên xi hoặc phủ định sạch trơn) ở chỗ nó lọc bỏ những yếu tố tiêu cực, lỗi thời và giữ lại có chọn lọc, cải tạo những hạt nhân hợp lý của cái cũ để phát triển cái mới."
+            },
+            {
+                fileType: 270,
+                originalIndex: 109,
+                question: "Quan hệ nào sau đây được xem là “chất xúc tác” kinh tế thúc đẩy tốc độ, nhịp điệu sản xuất, làm năng động hóa toàn bộ đời sống kinh tế xã hội?",
+                options: [
+                    "Quan hệ sở hữu về tư liệu sản xuất",
+                    "Quan hệ về địa vị chính trị - xã hội",
+                    "Quan hệ tổ chức quản lý sản xuất",
+                    "Quan hệ phân phối sản phẩm lao động"
+                ],
+                correct: 3,
+                explanation: "Quan hệ phân phối sản phẩm lao động tác động trực tiếp đến lợi ích của người lao động, do đó được xem là 'chất xúc tác' kinh tế kích thích (hoặc kìm hãm) thái độ lao động và nhịp điệu sản xuất."
+            },
+            {
+                fileType: 270,
+                originalIndex: 115,
+                question: "Nhận định nào sau đây là đúng về mối quan hệ giữa cơ sở hạ tầng và kiến trúc thượng tầng?",
+                options: [
+                    "Cơ sở hạ tầng và kiến trúc thượng tầng tồn tại độc lập và tách rời nhau",
+                    "Cơ sở hạ tầng quyết định kiến trúc thượng tầng còn kiến trúc thượng tầng tác động trở lại cơ sở hạ tầng",
+                    "Kiến trúc thượng tầng quyết định cơ sở hạ tầng, còn cơ sở hạ tầng tác động trở lại kiến trúc thượng tầng",
+                    "Cơ sở hạ tầng và kiến trúc thượng tầng tác động qua lại cân bằng nhau"
+                ],
+                correct: 1,
+                explanation: "Cơ sở hạ tầng (cơ cấu kinh tế) sinh ra và quyết định kiến trúc thượng tầng (chính trị, pháp luật, tư tưởng...). Tuy nhiên, kiến trúc thượng tầng có tính độc lập tương đối và tác động trở lại mạnh mẽ đối với cơ sở hạ tầng."
+            },
+            {
+                fileType: 270,
+                originalIndex: 122,
+                question: "Điền vào chỗ trống từ còn thiếu để hoàn chỉnh câu nói sau của C.Mác: “Tôi coi sự phát triển của các hình thái kinh tế-xã hội là một quá trình ………?”",
+                options: [
+                    "Lịch sử - xã hội",
+                    "Lịch sử - tự nhiên",
+                    "Tự nhiên - xã hội",
+                    "Chính trị - xã hội"
+                ],
+                correct: 1,
+                explanation: "Trong lời tựa bộ 'Tư bản', C.Mác khẳng định sự phát triển của các hình thái kinh tế - xã hội là một quá trình 'lịch sử - tự nhiên', nghĩa là nó tuân theo các quy luật khách quan vốn có của xã hội chứ không phụ thuộc ý muốn chủ quan."
+            },
+            {
+                fileType: 270,
+                originalIndex: 124,
+                question: "Con đường quá độ lên chủ nghĩa xã hội ở Việt Nam được thực hiện như thế nào?",
+                options: [
+                    "Phát triển tuần tự theo các hình thái kinh tế-xã hội",
+                    "Phát triển bỏ qua chế độ phong kiến",
+                    "Phát triển bỏ qua chế độ tư bản chủ nghĩa",
+                    "Phát triển nhảy vọt lên hình thái kinh tế-xã hội cao nhất"
+                ],
+                correct: 2,
+                explanation: "Việt Nam lựa chọn con đường quá độ lên chủ nghĩa xã hội bỏ qua chế độ tư bản chủ nghĩa (tức là bỏ qua việc xác lập vị trí thống trị của quan hệ sản xuất và kiến trúc thượng tầng TBCN, nhưng tiếp thu kế thừa các thành tựu khoa học công nghệ của nhân loại dưới chế độ TBCN)."
+            },
+            {
+                fileType: 270,
+                originalIndex: 136,
+                question: "Thời cơ cách mạng là gì?",
+                options: [
+                    "Là điều kiện, hoàn cảnh kinh tế - xã hội, chính trị bên ngoài tác động đến, là tiền đề diễn ra các cuộc cách mạng xã hội",
+                    "Là ý chí, niềm tin trình độ giác ngộ và nhận thức của lực lượng cách mạng vào mục tiêu và nhiệm vụ cách mạng",
+                    "Là sự chín muồi của mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất, sự phát triển đến đỉnh cao của cuộc đấu tranh giai cấp",
+                    "Là thời điểm đặc biệt khi điều kiện khách quan và nhân tố chủ quan của cách mạng xã hội đã chín muồi, là lúc thuận lợi nhất có thể bùng nổ cách mạng, có ý nghĩa quyết định đối với thành công của cách mạng"
+                ],
+                correct: 3,
+                explanation: "Thời cơ cách mạng là sự kết hợp chín muồi của cả điều kiện khách quan (tình thế cách mạng) lẫn nhân tố chủ quan (lực lượng cách mạng đã sẵn sàng hành động), tạo ra thời điểm thuận lợi nhất để giành thắng lợi."
+            },
+            {
+                fileType: 270,
+                originalIndex: 149,
+                question: "Giai cấp nào sau đây được ví như “công cụ biết nói” thời Cổ đại?",
+                options: [
+                    "Giai cấp nô lệ",
+                    "Giai cấp chủ nô",
+                    "Giai cấp nông dân",
+                    "Giai cấp công nhân"
+                ],
+                correct: 0,
+                explanation: "Trong xã hội chiếm hữu nô lệ thời Cổ đại, người nô lệ bị coi là tài sản thuộc quyền sở hữu hoàn toàn của chủ nô, bị đối xử như súc vật và bị ví là 'những công cụ biết nói'."
+            },
+            {
+                fileType: 270,
+                originalIndex: 163,
+                question: "Ngày nay hiện tượng mê tín dị đoan thể hiện đặc tính nào trong tính độc lập tương đối của ý thức xã hội?",
+                options: [
+                    "Tính vượt trước",
+                    "Tính lạc hậu",
+                    "Tính kế thừa",
+                    "Tính tác động qua lại"
+                ],
+                correct: 1,
+                explanation: "Mê tín dị đoan nảy sinh từ xã hội cũ khi trình độ khoa học còn thấp kém, nhưng đến ngày nay khi tồn tại xã hội đã hiện đại thì nó vẫn tồn tại dai dẳng do sức mạnh thói quen, tập quán — thể hiện 'tính lạc hậu' của ý thức xã hội so với tồn tại xã hội."
+            },
+            {
+                fileType: 270,
+                originalIndex: 171,
+                question: "Giai đoạn nhận thức cảm tính được thực hiện thông qua những hình thức cơ bản nào?",
+                options: [
+                    "Cảm giác - Tri giác - Biểu tượng",
+                    "Cảm giác - Phán đoán - Tri giác",
+                    "Khái niệm - Phán đoán - Suy lý",
+                    "Khái niệm - Suy lý - Tri giác"
+                ],
+                correct: 0,
+                explanation: "Nhận thức cảm tính (trực quan sinh động) gồm 3 hình thức từ thấp đến cao: Cảm giác (phản ánh từng thuộc tính riêng lẻ) -> Tri giác (tổng hợp các cảm giác tạo hình ảnh trọn vẹn) -> Biểu tượng (hình ảnh lưu giữ trong trí nhớ). Còn Khái niệm, Phán đoán, Suy lý thuộc nhận thức lý tính."
+            },
+            {
+                fileType: 270,
+                originalIndex: 184,
+                question: "Từ nguyên lý về mối liên hệ phổ biến của phép biện chứng duy vật chúng ta rút ra những nguyên tắc phương pháp luận nào cho hoạt động lý luận và thực tiễn?",
+                options: [
+                    "Quan điểm phát triển, quan điểm lịch sử - cụ thể",
+                    "Quan điểm hệ thống - cấu trúc, quan điểm lịch sử - cụ thể",
+                    "Quan điểm toàn diện, quan điểm phát triển",
+                    "Quan điểm toàn diện, quan điểm lịch sử - cụ thể"
+                ],
+                correct: 3,
+                explanation: "Từ nguyên lý về mối liên hệ phổ biến, triết học Mác - Lênin rút ra 2 nguyên tắc phương pháp luận: Quan điểm toàn diện (xem xét sự vật trong mọi mối liên hệ) và Quan điểm lịch sử - cụ thể (xem xét trong không gian, thời gian, điều kiện cụ thể). Quan điểm phát triển được rút ra từ nguyên lý về sự phát triển."
+            },
+            {
+                fileType: 270,
+                originalIndex: 206,
+                question: "Theo quan niệm của chủ nghĩa duy vật biện chứng, trong kết cấu của ý thức yếu tố nào là cơ bản và cốt lõi nhất?",
+                options: [
+                    "Tình cảm",
+                    "Niềm tin",
+                    "Tri thức",
+                    "Ý chí"
+                ],
+                correct: 2,
+                explanation: "Trong kết cấu theo chiều ngang của ý thức (tri thức, tình cảm, niềm tin, ý chí...), 'Tri thức' là phương thức tồn tại của ý thức và là nhân tố cơ bản, cốt lõi nhất. Ý thức mà không bao hàm tri thức thì chỉ là sự trừu tượng trống rỗng."
+            },
+            {
+                fileType: 270,
+                originalIndex: 223,
+                question: "Theo quan điểm triết học Mác, chân lý là:",
+                options: [
+                    "Những ý kiến thuộc về số đông",
+                    "Những kiến thức khoa học",
+                    "Những tri thức phù hợp với hiện thực khách quan và được kiểm nghiệm bằng thực tiễn",
+                    "Những lý luận phù hợp với ý chí, quyền lợi của con người"
+                ],
+                correct: 2,
+                explanation: "Chân lý là những tri thức của con người có nội dung phù hợp với hiện thực khách quan mà nó phản ánh và đã được thực tiễn kiểm nghiệm chứng minh là đúng."
+            },
+            {
+                fileType: 270,
+                originalIndex: 235,
+                question: "Chọn phương án sai. Bệnh giáo điều là khuynh hướng tư tưởng và hành động thể hiện:",
+                options: [
+                    "Tách rời lý luận khỏi thực tiễn",
+                    "Chú trọng công tác tổng kết thực tiễn",
+                    "Xa rời cuộc sống thực tiễn, rơi vào bệnh sách vở",
+                    "Áp dụng rập khuôn kiến thức, kinh nghiệm mà không tính đến những điều kiện thực tiễn lịch sử cụ thể"
+                ],
+                correct: 1,
+                explanation: "Bệnh giáo điều là tuyệt đối hóa lý luận sách vở, coi thường thực tiễn nên người mắc bệnh giáo điều KHÔNG bao giờ 'chú trọng công tác tổng kết thực tiễn' (phương án B ngược lại với bản chất bệnh giáo điều)."
+            },
+            {
+                fileType: 270,
+                originalIndex: 250,
+                question: "Yếu tố cơ bản nhất của tồn tại xã hội là gì?",
+                options: [
+                    "Phương thức sản xuất vật chất",
+                    "Điều kiện tự nhiên",
+                    "Hoàn cảnh địa lý",
+                    "Dân số và mật độ dân số"
+                ],
+                correct: 0,
+                explanation: "Tồn tại xã hội gồm 3 yếu tố cơ bản: Phương thức sản xuất vật chất, điều kiện tự nhiên - hoàn cảnh địa lý, và dân số - mật độ dân số. Trong đó, phương thức sản xuất vật chất là yếu tố cơ bản và quyết định nhất."
+            },
+            {
+                fileType: 270,
+                originalIndex: 268,
+                question: "Hãy điền chữ còn thiếu chỗ trống trong luận điểm sau theo quan điểm của triết học Mác về bản chất của con người: “Bản chất của con người là......các quan hệ xã hội”",
+                options: [
+                    "Tổng hợp",
+                    "Sự thống nhất",
+                    "Tổng hòa",
+                    "Biện chứng"
+                ],
+                correct: 2,
+                explanation: "Từ chính xác trong bản dịch chuẩn tác phẩm của C.Mác là 'Tổng hòa' — nhấn mạnh các quan hệ xã hội không cộng gộp cơ học mà đan xen, thâm nhập, quy định lẫn nhau tạo thành bản chất con người."
+            }
+        ];
+
+        // Trạng thái trò chơi
+        let currentSessionQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let answeredCurrent = false;
+        let sessionHistory = [];
+        let soundEnabled = true;
+        let synth = null;
+
+        // Khởi tạo âm thanh bằng Tone.js (tương tác lần đầu mới bật AudioContext theo quy định Safari iOS)
+        function initAudio() {
+            if (!synth && typeof Tone !== 'undefined') {
+                synth = new Tone.PolySynth(Tone.Synth).toDestination();
+                synth.volume.value = -8;
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (Tone.context.state !== 'running') {
+                    Tone.context.resume();
+                }
+                const now = Tone.now();
+                if (type === 'correct') {
+                    // Hợp âm vui tươi khi trả lời đúng
+                    synth.triggerAttackRelease("C5", "16n", now);
+                    synth.triggerAttackRelease("E5", "16n", now + 0.08);
+                    synth.triggerAttackRelease("G5", "8n", now + 0.16);
+                } else if (type === 'wrong') {
+                    // Âm trầm báo lỗi nhẹ nhàng
+                    synth.triggerAttackRelease("E3", "16n", now);
+                    synth.triggerAttackRelease("Eb3", "8n", now + 0.1);
+                } else if (type === 'finish') {
+                    synth.triggerAttackRelease(["C5", "E5", "G5", "C6"], "4n", now);
+                }
+            } catch (e) {
+                // Bỏ qua lỗi âm thanh nếu trình duyệt chặn
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const iconStart = document.getElementById('sound-icon-start');
+            const textStart = document.getElementById('sound-text-start');
+            const iconQuiz = document.getElementById('sound-icon-quiz');
+
+            if (soundEnabled) {
+                iconStart.className = "fa-solid fa-volume-high text-indigo-500";
+                textStart.textContent = "Âm thanh: Bật";
+                iconQuiz.className = "fa-solid fa-volume-high text-sm text-indigo-600";
+            } else {
+                iconStart.className = "fa-solid fa-volume-xmark text-slate-400";
+                textStart.textContent = "Âm thanh: Tắt";
+                iconQuiz.className = "fa-solid fa-volume-xmark text-sm text-slate-400";
+            }
+        }
+
+        // Thuật toán xáo trộn Fisher-Yates lấy ngẫu nhiên 20 câu từ cả 2 file
+        function pickRandomQuestions(count = 20) {
+            const shuffled = [...QUESTION_BANK];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
+
+        // Bắt đầu màn chơi mới
+        function startGame() {
+            initAudio();
+            currentSessionQuestions = pickRandomQuestions(20);
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            sessionHistory = [];
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quit-modal').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+
+            updateScoreUI();
+            renderQuestion();
+        }
+
+        // Cập nhật điểm số hiển thị
+        function updateScoreUI() {
+            const scoreEl = document.getElementById('score-display');
+            scoreEl.textContent = score > 0 ? `+${score}` : score;
+            if (score > 0) {
+                scoreEl.className = "text-sm font-extrabold tabular-nums text-emerald-400";
+            } else if (score < 0) {
+                scoreEl.className = "text-sm font-extrabold tabular-nums text-rose-400";
+            } else {
+                scoreEl.className = "text-sm font-extrabold tabular-nums text-white";
+            }
+        }
+
+        // Hiển thị câu hỏi hiện tại
+        function renderQuestion() {
+            answeredCurrent = false;
+            const q = currentSessionQuestions[currentIndex];
+
+            // Cập nhật tiến độ
+            document.getElementById('current-q-num').textContent = currentIndex + 1;
+            const progressPercent = ((currentIndex + 1) / currentSessionQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // HIỂN THỊ STT GỐC THEO YÊU CẦU: "stt + 270" hoặc "stt + 92"
+            const sourceBadge = document.getElementById('source-badge');
+            const sourceText = document.getElementById('source-text');
+            sourceText.textContent = `Câu ${q.originalIndex} + ${q.fileType}`;
+            
+            if (q.fileType === 270) {
+                sourceBadge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70";
+            } else {
+                sourceBadge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200/70";
+            }
+
+            // Hiển thị nội dung câu hỏi
+            document.getElementById('question-text').textContent = q.question;
+
+            // Ẩn khung giải thích
+            const expBox = document.getElementById('explanation-box');
+            expBox.classList.add('hidden');
+
+            // Reset nút Tiếp theo ở footer
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+            nextBtn.className = "btn-press w-full py-4 px-6 rounded-2xl bg-slate-200 text-slate-400 font-bold text-base flex items-center justify-center gap-2 transition-all cursor-not-allowed";
+            document.getElementById('next-btn-text').textContent = "Chọn một đáp án";
+            document.getElementById('next-btn-icon').className = "fa-solid fa-hand-pointer";
+
+            // Render 4 ô đáp án to, dễ bấm (min-height >= 64px, padding rộng rãi cho ngón tay)
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `option-btn-${idx}`;
+                btn.type = 'button';
+                btn.onclick = () => handleSelectAnswer(idx);
+                btn.className = "btn-press w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/80 flex items-start gap-3.5 shadow-2xs min-h-[64px]";
+
+                btn.innerHTML = `
+                    <span id="option-letter-${idx}" class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 font-extrabold text-sm flex items-center justify-center shrink-0 mt-0.5 transition-colors">
+                        ${letters[idx]}
+                    </span>
+                    <span class="text-[15.5px] font-medium text-slate-800 leading-snug flex-1 pt-0.5">
+                        ${optText}
+                    </span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Cuộn vùng nội dung về đầu câu hỏi
+            document.getElementById('quiz-scroll-area').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Xử lý khi người dùng bấm chọn một đáp án
+        function handleSelectAnswer(selectedIdx) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+
+            const q = currentSessionQuestions[currentIndex];
+            const isCorrect = selectedIdx === q.correct;
+            const letters = ['A', 'B', 'C', 'D'];
+
+            // Khóa tất cả các nút đáp án
+            for (let i = 0; i < q.options.length; i++) {
+                const btn = document.getElementById(`option-btn-${i}`);
+                btn.disabled = true;
+                btn.classList.remove('hover:border-indigo-300', 'hover:bg-slate-50/80');
+            }
+
+            const selectedBtn = document.getElementById(`option-btn-${selectedIdx}`);
+            const selectedLetter = document.getElementById(`option-letter-${selectedIdx}`);
+            const correctBtn = document.getElementById(`option-btn-${q.correct}`);
+            const correctLetter = document.getElementById(`option-letter-${q.correct}`);
+
+            // Hộp giải thích
+            const expBox = document.getElementById('explanation-box');
+            const expIconWrap = document.getElementById('exp-icon-wrap');
+            const expIcon = document.getElementById('exp-icon');
+            const expTitle = document.getElementById('exp-title');
+            const expText = document.getElementById('exp-text');
+
+            if (isCorrect) {
+                // ĐÚNG: Tô màu xanh lá, cộng +1 điểm
+                score += 1;
+                correctCount += 1;
+                playSound('correct');
+
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 flex items-start gap-3.5 shadow-sm animate-pop min-h-[64px]";
+                selectedLetter.className = "w-8 h-8 rounded-xl bg-emerald-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 mt-0.5";
+                selectedLetter.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+                // Giải thích tại sao đúng
+                expBox.className = "animate-slide-up rounded-2xl p-4 border-2 border-emerald-200 bg-emerald-50/90 mt-4";
+                expIconWrap.className = "w-8 h-8 rounded-xl bg-emerald-600 flex items-center justify-center shrink-0 mt-0.5 text-white";
+                expIcon.className = "fa-solid fa-check";
+                expTitle.className = "font-extrabold text-sm uppercase tracking-wide text-emerald-800";
+                expTitle.textContent = "Chính xác! (+1 điểm)";
+                expText.innerHTML = `<span class="font-bold text-emerald-900">Lý do đúng (${letters[q.correct]}):</span> ${q.explanation}`;
+
+            } else {
+                // SAI: Tô màu đỏ ô chọn, trừ -1 điểm, đồng thời chỉ ra đáp án đúng màu xanh
+                score -= 1;
+                wrongCount += 1;
+                playSound('wrong');
+
+                // Ô người dùng bấm sai -> Màu đỏ
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 flex items-start gap-3.5 shadow-sm animate-shake min-h-[64px]";
+                selectedLetter.className = "w-8 h-8 rounded-xl bg-rose-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 mt-0.5";
+                selectedLetter.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+
+                // Ô đáp án đúng -> Viền xanh để người học nhận biết
+                correctBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 flex items-start gap-3.5 min-h-[64px]";
+                correctLetter.className = "w-8 h-8 rounded-xl bg-emerald-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 mt-0.5";
+
+                // Giải thích tại sao sai và đáp án đúng là gì
+                expBox.className = "animate-slide-up rounded-2xl p-4 border-2 border-rose-200 bg-rose-50/90 mt-4";
+                expIconWrap.className = "w-8 h-8 rounded-xl bg-rose-600 flex items-center justify-center shrink-0 mt-0.5 text-white";
+                expIcon.className = "fa-solid fa-xmark";
+                expTitle.className = "font-extrabold text-sm uppercase tracking-wide text-rose-800";
+                expTitle.textContent = "Chưa chính xác! (-1 điểm)";
+                expText.innerHTML = `
+                    <span class="block mb-1.5 text-rose-900 font-semibold">
+                        Bạn đã chọn <strong>${letters[selectedIdx]}</strong> là chưa đúng. Đáp án đúng phải là <strong>${letters[q.correct]}</strong>.
+                    </span>
+                    <span class="text-slate-800"><strong>Giải thích:</strong> ${q.explanation}</span>
+                `;
+            }
+
+            // Lưu lịch sử câu này
+            sessionHistory.push({
+                sttLabel: `Câu ${q.originalIndex} + ${q.fileType}`,
+                question: q.question,
+                isCorrect: isCorrect,
+                userAnswer: letters[selectedIdx],
+                correctAnswer: letters[q.correct]
+            });
+
+            updateScoreUI();
+
+            // Kích hoạt nút Câu tiếp theo ở chân trang
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = false;
+            nextBtn.className = "btn-press w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all cursor-pointer";
+            
+            if (currentIndex === currentSessionQuestions.length - 1) {
+                document.getElementById('next-btn-text').textContent = "Xem Kết Quả Tổng Kết";
+                document.getElementById('next-btn-icon').className = "fa-solid fa-flag-checkered";
+            } else {
+                document.getElementById('next-btn-text').textContent = "Câu Tiếp Theo";
+                document.getElementById('next-btn-icon').className = "fa-solid fa-arrow-right";
+            }
+
+            // Tự động cuộn nhẹ xuống để thấy trọn vẹn hộp giải thích trên màn hình iPhone 13
+            setTimeout(() => {
+                expBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 120);
+        }
+
+        // Chuyển sang câu tiếp theo hoặc kết thúc
+        function nextQuestion() {
+            if (!answeredCurrent) return;
+
+            if (currentIndex < currentSessionQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Hiển thị màn hình tổng kết
+        function showResults() {
+            playSound('finish');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            const finalScoreEl = document.getElementById('final-score');
+            finalScoreEl.textContent = score > 0 ? `+${score}` : score;
+
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('wrong-count').textContent = wrongCount;
+
+            // Đánh giá kết quả
+            const evalEl = document.getElementById('score-evaluation');
+            const badgeEl = document.getElementById('result-badge-icon');
+            if (score >= 16) {
+                evalEl.textContent = "Xuất sắc! Bạn nắm rất vững kiến thức Triết học Mác - Lênin.";
+                badgeEl.className = "inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-amber-100 text-amber-500 shadow-md mb-4";
+            } else if (score >= 10) {
+                evalEl.textContent = "Khá tốt! Hãy ôn lại một vài câu nhầm lẫn để đạt điểm tối đa.";
+                badgeEl.className = "inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-emerald-100 text-emerald-600 shadow-md mb-4";
+            } else if (score >= 0) {
+                evalEl.textContent = "Đạt mức trung bình. Cần luyện tập thêm các cặp phạm trù và quy luật.";
+                badgeEl.className = "inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-sky-100 text-sky-600 shadow-md mb-4";
+            } else {
+                evalEl.textContent = "Điểm đang âm do chọn sai nhiều. Hãy đọc kỹ phần giải thích nhé!";
+                badgeEl.className = "inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-rose-100 text-rose-500 shadow-md mb-4";
+            }
+
+            // Render danh sách tóm tắt 20 câu
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            sessionHistory.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = `p-3 rounded-xl border text-xs flex items-center justify-between gap-2 ${
+                    item.isCorrect 
+                    ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900' 
+                    : 'bg-rose-50/70 border-rose-200 text-rose-900'
+                }`;
+                row.innerHTML = `
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="font-bold shrink-0">#${index + 1}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-white/80 font-bold text-[11px] shrink-0">${item.sttLabel}</span>
+                        <span class="truncate text-slate-700">${item.question}</span>
+                    </div>
+                    <span class="font-extrabold shrink-0">
+                        ${item.isCorrect ? '<i class="fa-solid fa-check text-emerald-600"></i> +1' : `<i class="fa-solid fa-xmark text-rose-600"></i> (${item.correctAnswer})`}
+                    </span>
+                `;
+                reviewList.appendChild(row);
+            });
+        }
+
+        // Xử lý hộp thoại thoát
+        function confirmQuit() {
+            document.getElementById('quit-modal').classList.remove('hidden');
+        }
+
+        function closeQuitModal() {
+            document.getElementById('quit-modal').classList.add('hidden');
+        }
+
+        function goHome() {
+            document.getElementById('quit-modal').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+
+</body></html>

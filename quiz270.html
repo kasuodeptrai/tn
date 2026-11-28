@@ -1,11 +1,13 @@
-<html lang="vi"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Trắc Nghiệm Triết Học Mác - Lênin (Đề 270 Câu)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
       theme: {
@@ -58,7 +60,7 @@
         </div>
 
         <!-- Điểm số hiện tại -->
-        <div id="score-badge" class="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl shrink-0 border transition-colors bg-teal-50 border-teal-200/90 text-teal-950">
+        <div id="score-badge" class="flex items-center gap-1.5 bg-teal-50 border border-teal-200/90 text-teal-950 px-3 py-1.5 rounded-2xl shrink-0">
           <span class="text-[11px] font-semibold text-teal-700">Điểm</span>
           <span id="score-value" class="text-base font-extrabold tabular-nums">0</span>
         </div>
@@ -66,10 +68,18 @@
 
       <!-- Hàng nút chế độ chơi: 20 câu ngẫu nhiên & Ngẫu nhiên đề (Đề 1 -> Đề 14) -->
       <div class="grid grid-cols-2 gap-2 mb-2">
-        <button id="btn-random-20" type="button" class="py-2 px-2.5 rounded-2xl text-xs font-bold border border-teal-200 bg-teal-50/80 text-teal-800 hover:bg-teal-100 active:scale-[0.98] transition-all truncate">
+        <button
+          id="btn-random-20"
+          type="button"
+          class="py-2 px-2.5 rounded-2xl text-xs font-bold border border-teal-200 bg-teal-50/80 text-teal-800 hover:bg-teal-100 active:scale-[0.98] transition-all truncate"
+        >
           🎲 20 Câu Ngẫu Nhiên
         </button>
-        <button id="btn-random-deck" type="button" class="py-2 px-2.5 rounded-2xl text-xs font-bold border border-slate-900 bg-slate-900 text-white hover:bg-slate-800 active:scale-[0.98] transition-all truncate">
+        <button
+          id="btn-random-deck"
+          type="button"
+          class="py-2 px-2.5 rounded-2xl text-xs font-bold border border-slate-900 bg-slate-900 text-white hover:bg-slate-800 active:scale-[0.98] transition-all truncate"
+        >
           📑 Ngẫu Nhiên Đề (1–14)
         </button>
       </div>
@@ -81,61 +91,7 @@
           <span id="deck-range-hint">Đề 1–13: 20 câu · Đề 14: 10 câu</span>
         </div>
         <div id="deck-selector-bar" class="flex items-center gap-1.5 overflow-x-auto pb-1">
-          <button type="button" data-deck="1" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 1 (stt 1–20 · 20 câu)">
-            Đề 1 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="2" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 2 (stt 21–40 · 20 câu)">
-            Đề 2 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="3" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 3 (stt 41–60 · 20 câu)">
-            Đề 3 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="4" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 4 (stt 61–80 · 20 câu)">
-            Đề 4 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="5" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 5 (stt 81–100 · 20 câu)">
-            Đề 5 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="6" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 6 (stt 101–120 · 20 câu)">
-            Đề 6 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="7" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 7 (stt 121–140 · 20 câu)">
-            Đề 7 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="8" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 8 (stt 141–160 · 20 câu)">
-            Đề 8 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="9" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 9 (stt 161–180 · 20 câu)">
-            Đề 9 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="10" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 10 (stt 181–200 · 20 câu)">
-            Đề 10 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="11" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 11 (stt 201–220 · 20 câu)">
-            Đề 11 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="12" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 12 (stt 221–240 · 20 câu)">
-            Đề 12 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="13" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 13 (stt 241–260 · 20 câu)">
-            Đề 13 <span class="opacity-80 font-semibold">(20)</span>
-          </button>
-        
-          <button type="button" data-deck="14" class="deck-pick-btn shrink-0 px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all bg-white text-slate-700 border-slate-200 hover:border-teal-300" title="Đề 14 (stt 261–270 · 10 câu)">
-            Đề 14 <span class="opacity-80 font-semibold">(10)</span>
-          </button>
+          <!-- Các nút chọn Đề 1..14 render bởi JS -->
         </div>
       </div>
 
@@ -146,111 +102,8 @@
           <span id="index-hint">Đúng: xanh · Sai: đỏ</span>
         </div>
         <div id="answer-index-bar" class="flex items-center gap-1.5 overflow-x-auto pb-1">
-        
-          <button type="button" data-jump="0" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 ring-2 ring-teal-700 ring-offset-1 scale-105" title="Câu 1 (stt đề 270: 235)">
-            <span class="text-[11px] font-extrabold leading-none">1</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="1" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 2 (stt đề 270: 146)">
-            <span class="text-[11px] font-extrabold leading-none">2</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="2" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 3 (stt đề 270: 183)">
-            <span class="text-[11px] font-extrabold leading-none">3</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="3" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 4 (stt đề 270: 216)">
-            <span class="text-[11px] font-extrabold leading-none">4</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="4" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 5 (stt đề 270: 91)">
-            <span class="text-[11px] font-extrabold leading-none">5</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="5" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 6 (stt đề 270: 79)">
-            <span class="text-[11px] font-extrabold leading-none">6</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="6" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 7 (stt đề 270: 259)">
-            <span class="text-[11px] font-extrabold leading-none">7</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="7" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 8 (stt đề 270: 41)">
-            <span class="text-[11px] font-extrabold leading-none">8</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="8" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 9 (stt đề 270: 181)">
-            <span class="text-[11px] font-extrabold leading-none">9</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="9" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 10 (stt đề 270: 168)">
-            <span class="text-[11px] font-extrabold leading-none">10</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="10" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 11 (stt đề 270: 61)">
-            <span class="text-[11px] font-extrabold leading-none">11</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="11" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 12 (stt đề 270: 241)">
-            <span class="text-[11px] font-extrabold leading-none">12</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="12" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 13 (stt đề 270: 110)">
-            <span class="text-[11px] font-extrabold leading-none">13</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="13" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 14 (stt đề 270: 166)">
-            <span class="text-[11px] font-extrabold leading-none">14</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="14" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 15 (stt đề 270: 38)">
-            <span class="text-[11px] font-extrabold leading-none">15</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="15" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 16 (stt đề 270: 109)">
-            <span class="text-[11px] font-extrabold leading-none">16</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="16" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 17 (stt đề 270: 114)">
-            <span class="text-[11px] font-extrabold leading-none">17</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="17" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 18 (stt đề 270: 221)">
-            <span class="text-[11px] font-extrabold leading-none">18</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="18" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 19 (stt đề 270: 27)">
-            <span class="text-[11px] font-extrabold leading-none">19</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-          <button type="button" data-jump="19" class="toc-chip shrink-0 min-w-[44px] px-2 py-1 rounded-xl border text-center transition-all flex flex-col items-center justify-center bg-slate-100 text-slate-700 border-slate-200 hover:border-teal-300 " title="Câu 20 (stt đề 270: 67)">
-            <span class="text-[11px] font-extrabold leading-none">20</span>
-            <span class="text-[9.5px] font-semibold opacity-95 leading-tight mt-0.5">—</span>
-          </button>
-        
-        <button id="toc-summary-btn" type="button" class="shrink-0 px-2.5 py-1 rounded-xl border text-[11px] font-bold transition-all bg-teal-50 text-teal-800 border-teal-200 hover:bg-teal-100">
-          Tổng kết
-        </button>
-      </div>
+          <!-- Các ô số thứ tự tương tác render bởi JS -->
+        </div>
       </div>
 
       <!-- Tiến độ màn chơi -->
@@ -265,64 +118,8 @@
 
     <!-- Vùng nội dung chính -->
     <main id="main-content" class="flex-1 flex flex-col justify-between">
-        <div class="animate-card flex-1 flex flex-col">
-          <section class="bg-white rounded-3xl border border-slate-200/85 shadow-xs p-4 mb-3">
-            <div class="flex items-center justify-between gap-2 mb-2.5">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-xl bg-teal-700 text-white text-xs font-bold tracking-wide">
-                stt đề 270: Câu 235
-              </span>
-              <span class="text-[11px] font-semibold text-slate-400">Câu 1/20</span>
-            </div>
-            <h2 class="text-[16px] sm:text-[17px] font-bold leading-snug text-slate-900">
-              Chọn phương án sai. Bệnh giáo điều là khuynh hướng tư tưởng và hành động thể hiện:
-            </h2>
-          </section>
-
-          <section class="space-y-2.5">
-            
-          <button type="button" data-opt="a" class="opt-btn w-full text-left rounded-2xl border p-3.5 min-h-[60px] flex items-start gap-3 transition-all duration-150 bg-white border-slate-200/90 text-slate-800 hover:border-teal-300 active:scale-[0.99] shadow-xs">
-            <span class="w-7 h-7 rounded-xl border font-bold text-xs uppercase flex items-center justify-center shrink-0 mt-0.5 bg-slate-100 text-slate-700 border-slate-200">
-              a
-            </span>
-            <span class="text-[15px] leading-snug font-medium flex-1">Tách rời lý luận khỏi thực tiễn</span>
-            
-          </button>
-        
-          <button type="button" data-opt="b" class="opt-btn w-full text-left rounded-2xl border p-3.5 min-h-[60px] flex items-start gap-3 transition-all duration-150 bg-white border-slate-200/90 text-slate-800 hover:border-teal-300 active:scale-[0.99] shadow-xs">
-            <span class="w-7 h-7 rounded-xl border font-bold text-xs uppercase flex items-center justify-center shrink-0 mt-0.5 bg-slate-100 text-slate-700 border-slate-200">
-              b
-            </span>
-            <span class="text-[15px] leading-snug font-medium flex-1">Chú trọng công tác tổng kết thực tiễn</span>
-            
-          </button>
-        
-          <button type="button" data-opt="c" class="opt-btn w-full text-left rounded-2xl border p-3.5 min-h-[60px] flex items-start gap-3 transition-all duration-150 bg-white border-slate-200/90 text-slate-800 hover:border-teal-300 active:scale-[0.99] shadow-xs">
-            <span class="w-7 h-7 rounded-xl border font-bold text-xs uppercase flex items-center justify-center shrink-0 mt-0.5 bg-slate-100 text-slate-700 border-slate-200">
-              c
-            </span>
-            <span class="text-[15px] leading-snug font-medium flex-1">Xa rời cuộc sống thực tiễn, rơi vào bệnh sách vở</span>
-            
-          </button>
-        
-          <button type="button" data-opt="d" class="opt-btn w-full text-left rounded-2xl border p-3.5 min-h-[60px] flex items-start gap-3 transition-all duration-150 bg-white border-slate-200/90 text-slate-800 hover:border-teal-300 active:scale-[0.99] shadow-xs">
-            <span class="w-7 h-7 rounded-xl border font-bold text-xs uppercase flex items-center justify-center shrink-0 mt-0.5 bg-slate-100 text-slate-700 border-slate-200">
-              d
-            </span>
-            <span class="text-[15px] leading-snug font-medium flex-1">Áp dụng rập khuôn kiến thức, kinh nghiệm mà không tính đến những điều kiện thực tiễn lịch sử cụ thể</span>
-            
-          </button>
-        
-          </section>
-
-          
-        </div>
-
-        <div class="mt-4 pt-1">
-          <button id="next-btn" type="button" disabled="" class="w-full py-3.5 px-5 rounded-2xl font-bold text-[15px] transition-all flex items-center justify-center gap-2 bg-slate-200 text-slate-400 cursor-not-allowed">
-            Câu tiếp theo →
-          </button>
-        </div>
-      </main>
+      <!-- Nội dung câu hỏi / tổng kết được render bởi JS -->
+    </main>
 
     <!-- Chân trang nhỏ gọn -->
     <footer class="mt-4 pt-2 pb-1 text-center text-[11px] text-slate-400">
@@ -4030,9 +3827,11 @@
       if (isCorrect) {
         state.score += 1;
         state.correctCount += 1;
+        playFeedbackSound(true);
       } else {
         state.score -= 1;
         state.wrongCount += 1;
+        playFeedbackSound(false);
       }
 
       state.answersByIndex[state.currentIndex] = {
@@ -4041,6 +3840,85 @@
       };
 
       render();
+    }
+
+    /**
+     * Phát âm thanh phản hồi đúng/sai bằng Web Audio API:
+     * - Đúng: tiếng chuông "correct ding" trong trẻo, ngân vang
+     * - Sai: tiếng "wrong buzzer" trầm rè đặc trưng của game show
+     */
+    function playFeedbackSound(isCorrect) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+
+        if (!window.__quizAudioCtx) {
+          window.__quizAudioCtx = new AudioCtx();
+        }
+        const ctx = window.__quizAudioCtx;
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+
+        const now = ctx.currentTime;
+        if (isCorrect) {
+          // Hiệu ứng "Correct Ding": chuông ngân hai tầng tần số sáng và vang
+          const harmonics = [
+            { freq: 987.77, gain: 0.22, duration: 0.65 },  // B5 (nốt chính)
+            { freq: 1318.51, gain: 0.14, duration: 0.72 }, // E6 (quãng 4 ngân sáng)
+            { freq: 1975.53, gain: 0.06, duration: 0.45 }  // B6 (hài âm chuông)
+          ];
+
+          harmonics.forEach((tone, index) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const startTime = now + (index === 1 ? 0.065 : 0);
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(tone.freq, startTime);
+
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.exponentialRampToValueAtTime(tone.gain, startTime + 0.012);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + tone.duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + tone.duration + 0.02);
+          });
+        } else {
+          // Hiệu ứng "Wrong Buzzer": hai sóng răng cưa lệch pha nhẹ tạo tiếng rè trầm đặc trưng
+          const buzzerFreqs = [138.59, 146.83]; // C#3 & D3 tạo độ rung buzzer rõ rệt
+          buzzerFreqs.forEach((baseFreq) => {
+            const osc = ctx.createOscillator();
+            const filter = ctx.createBiquadFilter();
+            const gain = ctx.createGain();
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(baseFreq, now);
+            osc.frequency.linearRampToValueAtTime(baseFreq * 0.88, now + 0.48);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(750, now);
+            filter.frequency.linearRampToValueAtTime(420, now + 0.48);
+
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.linearRampToValueAtTime(0.13, now + 0.02);
+            gain.gain.setValueAtTime(0.12, now + 0.36);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.52);
+          });
+        }
+      } catch (err) {
+        // Bỏ qua nếu thiết bị chặn âm thanh
+      }
     }
 
     function handleNext() {
@@ -4241,7 +4119,7 @@
             <div class="animate-card mt-3.5 rounded-2xl bg-rose-50/95 border border-rose-200 p-4 shadow-xs">
               <div class="flex items-center justify-between gap-2 mb-1.5">
                 <span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-rose-800">
-                  <span>✕</span> Chưa chính xác!
+                  <span>✕</span> ÈEE
                 </span>
                 <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-rose-600 text-white">-1 điểm</span>
               </div>
@@ -4418,11 +4296,60 @@
         .replace(/'/g, '&#39;');
     }
 
+    function showRuntimeError(err) {
+      const main = document.getElementById('main-content');
+      if (!main) return;
+      const message = err && err.message ? err.message : String(err || 'Lỗi không xác định');
+      main.innerHTML = `
+        <div class="rounded-3xl bg-rose-50 border border-rose-200 p-4 text-rose-950 shadow-xs">
+          <div class="text-sm font-extrabold text-rose-800 mb-1">Đã xảy ra lỗi hiển thị</div>
+          <p class="text-xs leading-relaxed mb-3">${escapeHtml(message)}</p>
+          <button
+            id="btn-retry-error"
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-rose-700 text-white text-xs font-bold hover:bg-rose-800 transition-all"
+          >
+            Tải lại màn chơi
+          </button>
+        </div>
+      `;
+      const retryBtn = document.getElementById('btn-retry-error');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', () => {
+          try {
+            startNewRound();
+          } catch (innerErr) {
+            console.error(innerErr);
+          }
+        });
+      }
+    }
+
+    window.addEventListener('error', (event) => {
+      if (event && event.error) {
+        showRuntimeError(event.error);
+      }
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      showRuntimeError(event && event.reason ? event.reason : 'Promise bị từ chối');
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btn-random-20').addEventListener('click', startNewRound);
-      document.getElementById('btn-random-deck').addEventListener('click', startRandomDeck);
-      startNewRound();
+      try {
+        const btnRandom20 = document.getElementById('btn-random-20');
+        const btnRandomDeck = document.getElementById('btn-random-deck');
+        if (btnRandom20) {
+          btnRandom20.addEventListener('click', startNewRound);
+        }
+        if (btnRandomDeck) {
+          btnRandomDeck.addEventListener('click', startRandomDeck);
+        }
+        startNewRound();
+      } catch (err) {
+        showRuntimeError(err);
+      }
     });
   </script>
-
-</body></html>
+</body>
+</html>
